@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>New Year Effects</title>
+<style>
+html, body { margin: 0; padding: 0; overflow: hidden; background: transparent; user-select: none; }
+canvas { position: fixed; left: 0; top: 0; display: block; }
+</style>
+</head>
+<body>
+<canvas id="layer"></canvas>
+<script>
+'use strict';
+// Верхний слой. Нижний (над рабочим столом) открывает рантайм через window.open:
+// оба окна в одном JS-контексте, все эффекты — здесь.
+const path = require('path');
+const { Runtime } = require(path.join(__dirname, 'runtime.js'));
+const mod = name => require(path.join(__dirname, 'modules', name + '.js'));
+
+const rt = new Runtime();
+window.rt = rt;
+
+// порядок — снизу вверх: ёлка, снежки, фейерверк, гирлянда, снег, сани
+const list = [
+    ['tree', 'Tree'],
+    ['snowballs', 'SnowballGame'],
+    ['fireworks', 'Fireworks'],
+    ['garland', 'Garland'],
+    ['snow', 'Snow'],
+    ['sleigh', 'Sleigh'],
+];
+for (const [file, cls] of list) {
+    try {
+        rt.add(new (mod(file)[cls])(rt));
+    } catch (e) {
+        console.error(`module ${file} failed to start`, e);
+    }
+}
+</script>
+</body>
+</html>

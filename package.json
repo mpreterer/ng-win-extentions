@@ -1,0 +1,67 @@
+{
+  "name": "ng-windows-effects",
+  "productName": "New Year Effects",
+  "version": "1.0.0",
+  "description": "New Year desktop effects for Windows: snow and snowmen, a garland, Ded Moroz on a sleigh, snowballs, fireworks and a Christmas tree.",
+  "author": "mpreterer",
+  "homepage": "https://github.com/mpreterer/ng-win-extentions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpreterer/ng-win-extentions.git"
+  },
+  "main": "src/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "icons": "electron tools/make-icons.js",
+    "dist": "electron-builder --win nsis portable"
+  },
+  "dependencies": {
+    "koffi": "3.3.6"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.1"
+  },
+  "build": {
+    "appId": "local.ng.windows.effects",
+    "productName": "New Year Effects",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/koffi/**/*",
+      "node_modules/@koromix/**/*"
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "shortcutName": "New Year Effects",
+      "artifactName": "NewYearEffects-Setup.exe",
+      "installerIcon": "assets/icon.ico",
+      "include": "build/installer.nsh",
+      "installerLanguages": [
+        "en_US",
+        "ru_RU"
+      ],
+      "multiLanguageInstaller": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "NewYearEffects-Portable.exe"
+    },
+    "publish": null
+  }
+}
